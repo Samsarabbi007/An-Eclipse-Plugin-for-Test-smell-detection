@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -33,7 +34,15 @@ public class GeneralFixtureMainClass {
     ArrayList<OutputCollector> outputs = new ArrayList<OutputCollector>();
 
     public void generalfixturemain(String filePath) throws IOException {
-        
+    	FileWriter csvWriter = new FileWriter("D:\\SPL-3\\TestSmellSystem-Outputs\\generalfixture.csv");
+    	csvWriter.append("Smell_Name");
+	    csvWriter.append(",");
+	    csvWriter.append("Path");
+	    csvWriter.append(",");
+	    csvWriter.append("File_Name");
+	    csvWriter.append(",");
+	    csvWriter.append("LineNo");
+	    csvWriter.append("\n");
         pw = new PrintWriter(new File("D:\\SPL-3\\TestSmellSystem-Outputs\\generalFixture.txt"));
 
 //        
@@ -440,6 +449,14 @@ public class GeneralFixtureMainClass {
                         	falseFound.put(class_Name, javaFilePath );
                             pathVsLine.put(javaFilePath,String.valueOf(count));
                             lineNO.add(String.valueOf(count));
+                            csvWriter.append("General Fixture");
+                    	    csvWriter.append(",");
+                            csvWriter.append(javaFilePath);
+                    	    csvWriter.append(",");
+                    	    csvWriter.append(ActualFileName);
+                    	    csvWriter.append(",");
+                    	    csvWriter.append(Integer.toString(count));
+                    	    csvWriter.append("\n");
                             break;
                         }
                         count++;
@@ -517,6 +534,8 @@ public class GeneralFixtureMainClass {
 
         pw.write(sb.toString());
         pw.close();
+        csvWriter.flush();
+        csvWriter.close();
 	 }
 
 }

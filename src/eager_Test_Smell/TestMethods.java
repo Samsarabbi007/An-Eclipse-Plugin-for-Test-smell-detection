@@ -13,6 +13,7 @@ import test_smell_detection_plugin.handlers.OutputCollector;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -48,6 +49,15 @@ public class TestMethods extends SwingWorker<Void, String> {
 		
 
 		StringBuilder sb = new StringBuilder();
+		FileWriter csvWriter = new FileWriter("D:\\SPL-3\\TestSmellSystem-Outputs\\EgarTest.csv");
+    	csvWriter.append("Smell_Name");
+	    csvWriter.append(",");
+	    csvWriter.append("Path");
+	    csvWriter.append(",");
+	    csvWriter.append("File_Name");
+	    csvWriter.append(",");
+	    csvWriter.append("LineNo");
+	    csvWriter.append("\n");
         new FolderExplorer((level, path, file) -> path.endsWith(".java") && (path.contains("Test") || path.contains("test")),
         		(level, path, file) -> {
         			
@@ -80,6 +90,19 @@ public class TestMethods extends SwingWorker<Void, String> {
 ////                            		System.out.println(s);
 //                            		str += s + "\n";
 //                            	}
+                            	try {
+									csvWriter.append("Eager Test");
+									csvWriter.append(",");
+	                        	    csvWriter.append(path);
+	                        	    csvWriter.append(",");
+	                        	    csvWriter.append(fileName);
+	                        	    csvWriter.append(",");
+	                        	    csvWriter.append(str);
+	                        	    csvWriter.append("\n");
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
                             	System.out.println(path);
                             	System.out.println(str);
                             	sb.append(path+" "+str+"\n");
@@ -127,7 +150,8 @@ public class TestMethods extends SwingWorker<Void, String> {
         }).explore(projectDir);
         writer.write(sb.toString());
 		writer.close(); 
-		
+		csvWriter.flush();
+		csvWriter.close();
 		AllOutputs ao = AllOutputs.getExistingInstance();
 		ao.setEagers(outputs);
         return null;

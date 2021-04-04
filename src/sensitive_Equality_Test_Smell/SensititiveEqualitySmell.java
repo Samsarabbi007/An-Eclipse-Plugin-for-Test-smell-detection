@@ -26,18 +26,29 @@ public class SensititiveEqualitySmell {
 	  public void sensitivityMain(String filePath) throws IOException {
 		    // TODO Auto-generated method stub
 			  BufferedWriter writer = new BufferedWriter(new FileWriter("D:\\SPL-3\\TestSmellSystem-Outputs\\SensititiveEqualitySmell.txt"));
+			  FileWriter csvWriter = new FileWriter("D:\\SPL-3\\TestSmellSystem-Outputs\\Sensititive_Test.csv");
+				csvWriter.append("Smell_Name");
+				csvWriter.append(",");
+				csvWriter.append("Path");
+				csvWriter.append(",");
+				csvWriter.append("File_Name");
+				csvWriter.append(",");
+				csvWriter.append("LineNo");
+				csvWriter.append("\n");
 			  folder = new File(filePath);
-			  chooseFolder(writer,folder);
+			  chooseFolder(writer,csvWriter,folder);
 			  writer.close();
+			  csvWriter.flush();
+			  csvWriter.close();
 
 		  }
 
-		  public static void chooseFolder(BufferedWriter writer, final File folder) {
+		  public static void chooseFolder(BufferedWriter writer, FileWriter csvWriter, final File folder) {
 	       
 		    for (final File fileEntry : folder.listFiles()) {
 		      if (fileEntry.isDirectory()) {
 		        // System.out.println("Reading files under the folder "+folder.getAbsolutePath());
-		        chooseFolder(writer,fileEntry);
+		        chooseFolder(writer,csvWriter,fileEntry);
 		      } else {
 		        if (fileEntry.isFile()) {
 		          temp = fileEntry.getName();
@@ -47,7 +58,7 @@ public class SensititiveEqualitySmell {
 		        	  
 		        	  String path = folder.getAbsolutePath()+ "\\" + fileEntry.getName();
 		        	  try {
-		      			chooseFile(writer,path);
+		      			chooseFile(writer,csvWriter,path);
 		      		  } catch (IOException e) {
 		      			// TODO Auto-generated catch block
 		      			e.printStackTrace();
@@ -82,7 +93,7 @@ public class SensititiveEqualitySmell {
 
 		
 
-		 public static void printMessage( BufferedWriter writer, String path ,ArrayList<ErrorRecords> errors) throws IOException {
+		 public static void printMessage( BufferedWriter writer, FileWriter csvWriter, String path ,ArrayList<ErrorRecords> errors) throws IOException {
 			  System.out.println("File Path = " + path);
 			  writer.write("File Path = " + path+'\n');
 			  errorLog = errorLog + "File Path = " + path +'\n' +'\n';
@@ -108,6 +119,20 @@ public class SensititiveEqualitySmell {
                      	ActualFileName+=ch.toString();
                      }
                      System.out.println(ActualFileName);
+                     try {
+        				csvWriter.append("Sensititive Test");
+     					csvWriter.append(",");
+     					csvWriter.append(path);
+     					csvWriter.append(",");
+     					csvWriter.append(ActualFileName);
+     					csvWriter.append(",");
+     					csvWriter.append(Integer.toString(errors.get(i).getLineNumber()));
+     					csvWriter.append("\n"); 
+     					
+     				} catch (IOException e) {
+     					// TODO Auto-generated catch block
+     					e.printStackTrace();
+     				}
 				  OutputCollector o = new OutputCollector(path, ActualFileName, errors.get(i).getLineNumber() + "", "Sensititive Equality");
 				 outputs.add(o);
 				  errorCount++;
@@ -121,7 +146,7 @@ public class SensititiveEqualitySmell {
 			  errorLog = errorLog +'\n'+'\n'; 
 		  }
 		  
-		  public static void chooseFile(BufferedWriter writer, String fileName) throws IOException {
+		  public static void chooseFile(BufferedWriter writer, FileWriter csvWriter, String fileName) throws IOException {
 			  
 			  File file = new File(fileName); 
 			  
@@ -173,7 +198,7 @@ public class SensititiveEqualitySmell {
 				 
 			  }
 			  if(fileShow == true) {
-				  printMessage(writer,fileName,errors);
+				  printMessage(writer,csvWriter,fileName,errors);
 			  }
 			  
 			  AllOutputs.getExistingInstance().setSensitivities(outputs);

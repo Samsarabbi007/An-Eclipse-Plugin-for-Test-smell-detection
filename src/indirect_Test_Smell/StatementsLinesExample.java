@@ -10,6 +10,7 @@ import test_smell_detection_plugin.handlers.OutputCollector;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -21,7 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class StatementsLinesExample {
-    public static ArrayList<OutputCollector> statementsByLine(File projectDir,PrintWriter writer, StringBuilder sb, String src) throws ParseException {
+    public static ArrayList<OutputCollector> statementsByLine(File projectDir,PrintWriter writer, StringBuilder sb, String src, FileWriter csvWriter) throws ParseException {
     	ArrayList<OutputCollector> outputs = new ArrayList<OutputCollector>();
     	 new DirExplorer((level, path, file) -> path.endsWith(".java") && ((path.contains("Test") || path.contains("test"))), (level, path, file) -> {
 //            System.out.println(path);
@@ -76,13 +77,40 @@ public class StatementsLinesExample {
                                          			outputs.add(output);
                                          			 System.out.println("Indirect smell found. Method starts at Line "+node.getBegin().get().line );
                                          			 sb.append(path+" Method starts at Line "+node.getBegin().get().line+"\n" );
+                                         			try {
+                                         				csvWriter.append("Indirect Test");
+														csvWriter.append(",");
+														csvWriter.append(fileName);
+														csvWriter.append(",");
+														csvWriter.append(path);
+														csvWriter.append(",");
+														csvWriter.append(Integer.toString(node.getBegin().get().line));
+														csvWriter.append("\n"); 
+														
+													} catch (IOException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
                                          		 }
                                          		else if(sundorLine.contains("("+hobe+")")) {
                                          			OutputCollector output = new OutputCollector(path, fileName, node.getBegin().get().toString(), "Indirect Test Smell");
                                          			outputs.add(output);
                                          			System.out.println("Indirect smell found. Method starts at Line "+node.getBegin().get().line+"\n" );
                                         			 sb.append(path+" Method starts at Line "+node.getBegin().get().line+"\n" );
-
+                                        			 try {
+                                          				csvWriter.append("Indirect Test");
+ 														csvWriter.append(",");
+ 														csvWriter.append(fileName);
+ 														csvWriter.append(",");
+ 														csvWriter.append(path);
+ 														csvWriter.append(",");
+ 														csvWriter.append(Integer.toString(node.getBegin().get().line));
+ 														csvWriter.append("\n"); 
+ 														
+ 													} catch (IOException e) {
+ 														// TODO Auto-generated catch block
+ 														e.printStackTrace();
+ 													}
 
                                          		}
                                          		else if(sundorLine.contains("("+hobe+",")) {
@@ -90,21 +118,60 @@ public class StatementsLinesExample {
                                          			outputs.add(output);
                                          			System.out.println("Indirect smell found. Method starts at Line "+node.getBegin().get().line+"\n" );
                                         			 sb.append(path+" Method starts at Line "+node.getBegin().get().line+"\n" );
-
+                                        			 try {
+                                          				csvWriter.append("Indirect Test");
+ 														csvWriter.append(",");
+ 														csvWriter.append(fileName);
+ 														csvWriter.append(",");
+ 														csvWriter.append(path);
+ 														csvWriter.append(",");
+ 														csvWriter.append(Integer.toString(node.getBegin().get().line));
+ 														csvWriter.append("\n"); 
+ 														
+ 													} catch (IOException e) {
+ 														// TODO Auto-generated catch block
+ 														e.printStackTrace();
+ 													}
                                          		}
                                          		else if(sundorLine.contains("("+hobe+" ")) {
                                          			OutputCollector output = new OutputCollector(path, fileName, node.getBegin().get().toString(), "Indirect Test Smell");
                                          			outputs.add(output);
                                          			System.out.println("Indirect smell found. Method starts at Line "+node.getBegin().get().line+"\n" );
                                         			 sb.append(path+" Method starts at Line "+node.getBegin().get().line+"\n" );
-
+                                        			 try {
+                                          				csvWriter.append("Indirect Test");
+ 														csvWriter.append(",");
+ 														csvWriter.append(fileName);
+ 														csvWriter.append(",");
+ 														csvWriter.append(path);
+ 														csvWriter.append(",");
+ 														csvWriter.append(Integer.toString(node.getBegin().get().line));
+ 														csvWriter.append("\n"); 
+ 														
+ 													} catch (IOException e) {
+ 														// TODO Auto-generated catch block
+ 														e.printStackTrace();
+ 													}
                                          		}
                                          		else if(sundorLine.contains("("+hobe+".")) {
                                          			OutputCollector output = new OutputCollector(path, fileName, node.getBegin().get().toString(), "Indirect Test Smell");
                                          			outputs.add(output);
                                          			System.out.println("Indirect smell found. Method starts at Line "+node.getBegin().get().line+"\n" );
                                         			 sb.append(path+" Method starts at Line "+node.getBegin().get().line+"\n" );
-
+                                        			 try {
+                                          				csvWriter.append("Indirect Test");
+ 														csvWriter.append(",");
+ 														csvWriter.append(fileName);
+ 														csvWriter.append(",");
+ 														csvWriter.append(path);
+ 														csvWriter.append(",");
+ 														csvWriter.append(Integer.toString(node.getBegin().get().line));
+ 														csvWriter.append("\n"); 
+ 														
+ 													} catch (IOException e) {
+ 														// TODO Auto-generated catch block
+ 														e.printStackTrace();
+ 													}
                                          		}
                                          	
                                          	}
@@ -121,7 +188,20 @@ public class StatementsLinesExample {
                                   			outputs.add(output);
                                    			System.out.println("Indirect smell found. Method starts at Line "+node.getBegin().get().line );
                                 			 sb.append(path+" Method starts at Line "+node.getBegin().get().line+"\n" );
-
+                                			 try {
+                                  				csvWriter.append("Indirect Test");
+													csvWriter.append(",");
+													csvWriter.append(fileName);
+													csvWriter.append(",");
+													csvWriter.append(path);
+													csvWriter.append(",");
+													csvWriter.append(Integer.toString(node.getBegin().get().line));
+													csvWriter.append("\n"); 
+													
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
                                    			//System.out.println(sundorLine);
                                    	
                                    		}

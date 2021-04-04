@@ -57,7 +57,12 @@ public class SampleHandler extends AbstractHandler {
 	     
 	     
 			AssertRouletteTestMain assertRouteMain = new AssertRouletteTestMain();
-			assertRouteMain.assertRoulettemain(filePath);
+			try {
+				assertRouteMain.assertRoulettemain(filePath);
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			
 			EagerMainClass eagerMain = new EagerMainClass();
 			eagerMain.EagerMain(filePath);
@@ -76,6 +81,9 @@ public class SampleHandler extends AbstractHandler {
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		        
 			SensititiveEqualitySmell sensititive = new SensititiveEqualitySmell();

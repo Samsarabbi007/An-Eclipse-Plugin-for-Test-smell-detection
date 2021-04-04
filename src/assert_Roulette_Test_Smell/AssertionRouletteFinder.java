@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class AssertionRouletteFinder
 {
 	
 	ArrayList<OutputCollector> outputs = new ArrayList<OutputCollector>();
-	public void searchMethods(PrintWriter writer,StringBuilder sb,File srcFile) 
+	public void searchMethods(PrintWriter writer,StringBuilder sb,File srcFile, FileWriter csvWriter) 
 	{
 	   
 		
@@ -71,6 +72,20 @@ public class AssertionRouletteFinder
 										int lineNo = cu.getLineNumber(node1.getStartPosition())-1;
 										OutputCollector o = new OutputCollector(file.getAbsolutePath(), file.getName(), lineNo + "", "Assertion Roulette");
 									    outputs.add(o);
+									    try {
+											csvWriter.append("Assert Roulette");
+											csvWriter.append(",");
+										    csvWriter.append(file.getAbsolutePath());
+										    csvWriter.append(",");
+										    csvWriter.append(file.getName().toString());
+										    csvWriter.append(",");
+										    csvWriter.append(Integer.toString(lineNo));
+										    csvWriter.append("\n");
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									    
 										sb.append(file.getAbsolutePath()+","+file.getName().toString()+","+node.getName());
 									     sb.append('\n');
 									     sb.append('\n');

@@ -2,13 +2,23 @@ package assert_Roulette_Test_Smell;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public class AssertRouletteTestMain {
 
-	public void assertRoulettemain(String filePath) 
+	public void assertRoulettemain(String filePath) throws IOException 
 	{
-		
+		FileWriter csvWriter = new FileWriter("D:\\SPL-3\\TestSmellSystem-Outputs\\AssertRoulette.csv");
+    	csvWriter.append("Smell_Name");
+	    csvWriter.append(",");
+	    csvWriter.append("Path");
+	    csvWriter.append(",");
+	    csvWriter.append("File_Name");
+	    csvWriter.append(",");
+	    csvWriter.append("LineNo");
+	    csvWriter.append("\n");
 		PrintWriter writer=null;
 		try {
 			writer = new PrintWriter(new File("D:\\SPL-3\\TestSmellSystem-Outputs\\AssertRouletteSmell.txt"));
@@ -30,10 +40,12 @@ public class AssertRouletteTestMain {
 		sb.append('\n');
 		sb.append('\n');
         
-		arf.searchMethods(writer,sb,source);
+		arf.searchMethods(writer,sb,source,csvWriter);
         
 		writer.write(sb.toString());
 		writer.close();
+		csvWriter.flush();
+		csvWriter.close();
         
        
 	}
